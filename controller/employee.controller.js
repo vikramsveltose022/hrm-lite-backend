@@ -51,6 +51,9 @@ export const deleteEmployeeDetail = async (req, res, next) => {
 }
 export const updatedEmployeeDetail = async (req, res, next) => {
     try {
+        if (req.file) {
+            req.body.Image = req.file.filename;
+        }
         const empoloyee = await Employee.findById(req.params.id)
         if (!empoloyee) {
             return res.status(404).json({ message: "Not Found", status: false })
