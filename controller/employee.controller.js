@@ -27,7 +27,7 @@ export const viewEmployeeDetail = async (req, res, next) => {
 export const viewEmployeeDetailById = async (req, res, next) => {
     try {
         const employee = await Employee.findById(req.params.id)
-        return annoucement ? res.status(200).json({ Employee: employee, status: true }) : res.status(400).json({ message: "something went wrong", status: false })
+        return employee ? res.status(200).json({ Employee: employee, status: true }) : res.status(400).json({ message: "something went wrong", status: false })
     }
     catch (err) {
         console.log(err);
