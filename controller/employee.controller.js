@@ -17,7 +17,7 @@ export const saveEmployeeDetails = async (req, res, next) => {
 export const viewEmployeeDetail = async (req, res, next) => {
     try {
         const employee = await Employee.find({ status: "Active" }).sort({ sortorder: -1 })
-        return (employee.length > 0) ? res.status(200).json({ Employee: employee, status: true }) : res.status(404).json({ message: "User Not Found", status: false })
+        return (employee.length > 0) ? res.status(200).json({ Employee: employee, status: true }) : res.status(404).json({ message: "Employee Not Found", status: false })
     }
     catch (err) {
         console.log(err);
