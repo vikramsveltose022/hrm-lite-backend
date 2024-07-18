@@ -4,8 +4,8 @@ import bodyParser from "body-parser"
 import path from "path"
 import { fileURLToPath } from "url"
 import { dbConfig } from "./db/dbConfig.js"
-import EmployeeRouter from "./routes/employee.route.js"
-
+import EmployeeRouter from "./routes/employee.route.js";
+import UserRouter from "./routes/user.route.js"
 
 dotenv.config()
 const app = express()
@@ -14,7 +14,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 const publicPath = path.join(path.dirname(fileURLToPath(import.meta.url)), "public")
 app.use(express.static(publicPath))
+
 app.use("/empoloyee", EmployeeRouter)
+app.use("/user", UserRouter)
 
 
 app.get("/", (req, res) => {
