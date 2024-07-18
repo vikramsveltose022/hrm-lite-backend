@@ -13,6 +13,9 @@ const UserSchema = new mongoose.Schema({
     Contact: {
         type: String
     },
+    otp: {
+        type: Number
+    },
     status: {
         type: String,
         default: "Active"
