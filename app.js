@@ -6,7 +6,8 @@ import { fileURLToPath } from "url"
 import { dbConfig } from "./db/dbConfig.js"
 import EmployeeRouter from "./routes/employee.route.js";
 import UserRouter from "./routes/user.route.js"
-import CustomerRouter from "./routes/customer.route.js"
+import CustomerRouter from "./routes/customer.route.js";
+import ShiftRouter from "./routes/shift.route.js"
 
 dotenv.config()
 const app = express()
@@ -18,7 +19,8 @@ app.use(express.static(publicPath))
 
 app.use("/empoloyee", EmployeeRouter)
 app.use("/user", UserRouter)
-app.use("/customer",CustomerRouter)
+app.use("/customer", CustomerRouter)
+app.use("/shift", ShiftRouter)
 
 
 app.get("/", (req, res) => {
