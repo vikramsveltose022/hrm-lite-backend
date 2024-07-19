@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 
 const employeeSchema = new mongoose.Schema({
+    userId: {
+        type: String
+    },
     Image: {
         type: String
     },
