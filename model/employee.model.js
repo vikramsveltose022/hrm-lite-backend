@@ -40,6 +40,9 @@ const employeeSchema = new mongoose.Schema({
     ReferalContactNo: {
         type: String
     },
+    Shift: {
+        type: Object
+    },
     status: {
         type: String,
         default: "Active"
