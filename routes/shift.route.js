@@ -22,6 +22,6 @@ router.get("/view-shift", ViewShiftDetail)
 router.get("/view-shift-by-id/:id", ViewShiftById)
 router.delete("/delete-shift/:id", DeleteShiftDetail)
 router.put("/update-shift/:id", UpdateShiftDetail)
-router.put("/view-shift-by-user/:id", ViewShiftByUserId)
+router.get("/view-shift-by-user/:id", ViewShiftByUserId)
 
 export default router;

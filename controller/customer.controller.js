@@ -1,4 +1,8 @@
+import dotenv from "dotenv"
 import { Customer } from "../model/customer.model.js";
+import Jwt from "jsonwebtoken";
+import { ForgetPasswordMail } from "../service/sendmail.js";
+dotenv.config()
 
 export const saveCustomerDetails = async (req, res, next) => {
     try {
@@ -66,3 +70,73 @@ export const updatedCustomerDetail = async (req, res, next) => {
         return res.status(500).json({ error: "Internal Server Error", status: false })
     }
 }
+export const CustomerLogin = async (req, res, next) => {
+    try {
+        const { Email, Password } = req.body;
+        let existingAccount = await Customer.findOne({ Email })
+        if (!existingAccount) {
+            return res.status(400).json({ message: "Incorrect email", status: false });
+        }
+        if (existingAccount && existingAccount.Password !== Password) {
+            return res.status(400).json({ message: "Incorrect password", status: false });
+        }
+        const token = Jwt.sign({ subject: Email }, process.env.TOKEN_SECRET_KEY);
+        if (existingAccount) {
+            // await User.updateOne({ email }, { $set: { latitude, longitude, currentAddress } });
+            return res.json({ message: "Login successful", Customer: { ...existingAccount.toObject(), Password: undefined, token }, status: true, });
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Internal Server Error", status: false });
+    }
+};
+export const ForgetPassword = async (req, res, next) => {
+    try {
+        const { Email } = req.body;
+        const otp = Math.floor(100000 + Math.random() * 900000);
+        const customer = await Customer.findOne({ Email });
+        if (!customer) {
+            return res.status(404).json({ message: "Customer not found", status: false });
+        }
+        customer.otp = otp;
+        await ForgetPasswordMail(customer, otp)
+        await customer.save()
+        return res.status(200).json({ message: "Password Rest Successfull!", Customer: customer, status: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server error", status: false });
+    }
+};
+export const OtpVerify = async (req, res, next) => {
+    try {
+        const { otp, Email } = req.body;
+        const customer = await Customer.findOne({ Email: Email });
+        if (!customer) {
+            return res.status(404).json({ message: "Customer Not Found", status: false });
+        }
+        if (otp == customer.otp) {
+            return res.status(200).json({ Customer: customer, message: "otp matched successfully", status: true });
+        } else {
+            return res.status(400).json({ error: "Invalid otp", status: false });
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: "Internal server error...", status: false });
+    }
+};
+export const UpdatePassword = async (req, res, next) => {
+    try {
+        if (!req.body.Password) {
+            return res.status(400).json({ error: "Passwords Required", status: false });
+        } else {
+            const userUpdate = await Customer.updateOne({ Email: req.body.Email }, { Password: req.body.Password });
+            if ((userUpdate && userUpdate.modifiedCount > 0)) {
+                return res.status(200).json({ Message: "Password Updated Successfully", status: true });
+            }
+            return res.status(400).json({ Message: "Password Not Updated", status: false });
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ Message: "Internal Server Error...", status: false });
+    }
+};
