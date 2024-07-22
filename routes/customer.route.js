@@ -1,7 +1,7 @@
 import express from "express"
 import multer from "multer";
 import path from "path"
-import { deleteCustomerDetail, saveCustomerDetails, updatedCustomerDetail, viewCustomerDetail, viewCustomerDetailById } from "../controller/customer.controller.js";
+import { CustomerLogin, ForgetPassword, OtpVerify, UpdatePassword, deleteCustomerDetail, saveCustomerDetails, updatedCustomerDetail, viewCustomerDetail, viewCustomerDetailById } from "../controller/customer.controller.js";
 
 const router = express.Router();
 
@@ -22,5 +22,9 @@ router.get("/view-customer", viewCustomerDetail)
 router.get("/view-customer-by-id/:id", viewCustomerDetailById)
 router.delete("/delete-customer/:id", deleteCustomerDetail)
 router.put("/update-customer/:id", upload.single("image"), updatedCustomerDetail)
+router.post("/customer-login", CustomerLogin)
+router.post("/forget-password", ForgetPassword)
+router.post("/otp-verify", OtpVerify)
+router.post("/password-update", UpdatePassword)
 
 export default router;
