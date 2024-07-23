@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path"
 import multer from "multer";
-import { VerifyPanNo, deleteEmployeeDetail, saveEmployeeDetails, updatedEmployeeDetail, viewEmployeeDetail, viewEmployeeDetailById } from "../controller/employee.controller.js";
+import { VerifyPanNo, ViewEmployeeDetailByUserId, deleteEmployeeDetail, saveEmployeeDetails, updatedEmployeeDetail, viewEmployeeDetail, viewEmployeeDetailById } from "../controller/employee.controller.js";
 
 const router = express.Router();
 // const upload = multer({ dest: "public/Images/" })
@@ -19,6 +19,7 @@ const upload = multer({ storage: storage });
 
 router.post("/save-employee", upload.single("image"), saveEmployeeDetails);
 router.get("/view-employee", viewEmployeeDetail)
+router.get("/view-employee-userId/:id", ViewEmployeeDetailByUserId)
 router.get("/view-employee-by-id/:id", viewEmployeeDetailById)
 router.delete("/delete-employee/:id", deleteEmployeeDetail)
 router.put("/update-employee/:id", upload.single("image"), updatedEmployeeDetail)

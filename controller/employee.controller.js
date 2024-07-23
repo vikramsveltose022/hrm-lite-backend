@@ -24,6 +24,16 @@ export const viewEmployeeDetail = async (req, res, next) => {
         return res.status(500).json({ error: "Internal Server Error", status: false })
     }
 }
+export const ViewEmployeeDetailByUserId = async (req, res, next) => {
+    try {
+        const employee = await Employee.find({ userId: req.params.id, status: "Active" }).sort({ sortorder: -1 })
+        return (employee.length > 0) ? res.status(200).json({ Employee: employee, status: true }) : res.status(404).json({ message: "Employee Not Found", status: false })
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(500).json({ error: "Internal Server Error", status: false })
+    }
+}
 export const viewEmployeeDetailById = async (req, res, next) => {
     try {
         const employee = await Employee.findById(req.params.id)
