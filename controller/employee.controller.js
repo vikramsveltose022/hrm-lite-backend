@@ -6,7 +6,6 @@ export const saveEmployeeDetails = async (req, res, next) => {
         if (req.file) {
             req.body.Image = req.file.filename;
         }
-        console.log(req.body.Shift)
         const employee = await Employee.create(req.body)
         return employee ? res.status(200).json({ message: "employee details saved successfull", status: true }) : res.status(400).json({ message: "something went wrong", status: false })
     }
@@ -66,5 +65,23 @@ export const updatedEmployeeDetail = async (req, res, next) => {
     catch (err) {
         console.log(err);
         return res.status(500).json({ error: "Internal Server Error", status: false })
+    }
+}
+export const VerifyPanNo = async (req, res) => {
+    try {
+        const { panNo } = req.body;
+        if (!panNo) {
+            return res.status(400).json({ status: false, message: 'PanNo Or AadharNo is required.' });
+        }
+        // const existingFace = await User.findOne({ Pan_No: panNo});
+        const existingFace = await Employee.findOne({ $or: [{ AadharNo: panNo, database: database }, { PanNo: panNo }] });
+        if (existingFace) {
+            return res.status(200).json({ status: true, message: 'PAN card verification successful.', User: existingFace });
+        } else {
+            return res.status(404).json({ status: false, message: 'PAN card not found. Verification unsuccessful.' });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ status: false, error: 'Internal Server Error' });
     }
 }
