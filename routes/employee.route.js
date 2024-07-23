@@ -22,7 +22,7 @@ router.get("/view-employee", viewEmployeeDetail)
 router.get("/view-employee-userId/:id", ViewEmployeeDetailByUserId)
 router.get("/view-employee-by-id/:id", viewEmployeeDetailById)
 router.delete("/delete-employee/:id", deleteEmployeeDetail)
-router.put("/update-employee/:id", upload.single("image"), updatedEmployeeDetail)
+router.put("/update-employee/:id", updatedEmployeeDetail)
 
 router.post("/verify-pan-no", VerifyPanNo)
 
