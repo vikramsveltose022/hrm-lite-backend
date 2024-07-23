@@ -2,6 +2,7 @@ import dotenv from "dotenv"
 import express from "express"
 import bodyParser from "body-parser"
 import path from "path"
+import cors from "cors";
 import { fileURLToPath } from "url"
 import { dbConfig } from "./db/dbConfig.js"
 import EmployeeRouter from "./routes/employee.route.js";
@@ -11,6 +12,7 @@ import ShiftRouter from "./routes/shift.route.js"
 
 dotenv.config()
 const app = express()
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
