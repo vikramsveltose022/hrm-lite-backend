@@ -74,7 +74,7 @@ export const VerifyPanNo = async (req, res) => {
             return res.status(400).json({ status: false, message: 'PanNo Or AadharNo is required.' });
         }
         // const existingFace = await User.findOne({ Pan_No: panNo});
-        const existingFace = await Employee.findOne({ $or: [{ AadharNo: panNo, database: database }, { PanNo: panNo }] });
+        const existingFace = await Employee.findOne({ $or: [{ AadharNo: panNo }, { PanNo: panNo }] }).populate({ path: "userId", model: "customer" });
         if (existingFace) {
             return res.status(200).json({ status: true, message: 'PAN card verification successful.', User: existingFace });
         } else {
