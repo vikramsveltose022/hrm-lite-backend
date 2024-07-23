@@ -6,6 +6,8 @@ export const saveEmployeeDetails = async (req, res, next) => {
         if (req.file) {
             req.body.Image = req.file.filename;
         }
+        console.log("calling")
+        console.log(req.body)
         const employee = await Employee.create(req.body)
         return employee ? res.status(200).json({ message: "employee details saved successfull", status: true }) : res.status(400).json({ message: "something went wrong", status: false })
     }
