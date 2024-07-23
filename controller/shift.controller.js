@@ -49,7 +49,7 @@ export const ViewShiftDetail = async (req, res, next) => {
 }
 export const ViewShiftById = async (req, res, next) => {
     try {
-        const hours = await Shift.findOne({ id: req.params.id })
+        const hours = await Shift.findById({ _id: req.params.id })
         return (hours) ? res.status(200).json({ Shift: hours, status: true }) : res.status(404).json({ message: "Not Found", status: false })
     } catch (err) {
         console.log(err)
