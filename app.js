@@ -9,6 +9,9 @@ import EmployeeRouter from "./routes/employee.route.js";
 import UserRouter from "./routes/user.route.js"
 import CustomerRouter from "./routes/customer.route.js";
 import ShiftRouter from "./routes/shift.route.js"
+import LeaveRouter from "./routes/leave.route.js";
+import ManageLeaveRouter from "./routes/manageLeave.route.js";
+import HolidayRouter from "./routes/holiday.route.js"
 
 dotenv.config()
 const app = express()
@@ -23,6 +26,9 @@ app.use("/empoloyee", EmployeeRouter)
 app.use("/user", UserRouter)
 app.use("/customer", CustomerRouter)
 app.use("/shift", ShiftRouter)
+app.use("/leave", LeaveRouter)
+app.use("/leave-manage", ManageLeaveRouter)
+app.use("/holiday", HolidayRouter)
 
 
 app.get("/", (req, res) => {
