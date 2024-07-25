@@ -3,11 +3,11 @@ import { DeleteLeave, SaveLeave, UpdatedLeave, ViewLeave, ViewLeaveById, ViewLea
 
 const router = express.Router();
 
-router.post("/save-mange-leave", SaveLeave)
-router.get("/view-mange-leave", ViewLeave)
-router.get("/view-mange-leave-user/:id", ViewLeaveByUser)
-router.get("/view-mange-leave-by-id/:id", ViewLeaveById)
-router.put("/update-mange-leave/:id", UpdatedLeave)
-router.delete("/delete-mange-leave/:id", DeleteLeave)
+router.post("/save-manage-leave", SaveLeave)
+router.get("/view-manage-leave", ViewLeave)
+router.get("/view-manage-leave-user/:id", ViewLeaveByUser)
+router.get("/view-manage-leave-by-id/:id", ViewLeaveById)
+router.put("/update-manage-leave/:id", UpdatedLeave)
+router.delete("/delete-manage-leave/:id", DeleteLeave)
 
 export default router;

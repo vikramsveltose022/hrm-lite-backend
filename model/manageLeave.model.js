@@ -10,7 +10,7 @@ const LeaveMangeSchema = new mongoose.Schema({
     NoOfYearly: {
         type: Number
     },
-    NoOfmonthly: {
+    NoOfMonthly: {
         type: Number
     },
     CheckStatus: {
