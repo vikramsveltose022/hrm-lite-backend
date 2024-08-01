@@ -27,10 +27,10 @@ app.use("/empoloyee", EmployeeRouter)
 app.use("/user", UserRouter)
 app.use("/customer", CustomerRouter)
 app.use("/shift", ShiftRouter)
-app.use("/leave", LeaveRouter)
-app.use("/leave-manage", ManageLeaveRouter)
+app.use("/leave-manage", LeaveRouter)
+app.use("/leave", ManageLeaveRouter)
 app.use("/holiday", HolidayRouter)
-app.use("/salary",SalaryRouter)
+app.use("/salary", SalaryRouter)
 
 
 app.get("/", (req, res) => {
