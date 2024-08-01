@@ -51,7 +51,7 @@ export const deleteEmployeeDetail = async (req, res, next) => {
     try {
         const empoloyee = await Employee.findById(req.params.id)
         if (!empoloyee) {
-            return res.status(404).json({ message: "Not Fount", status: false })
+            return res.status(404).json({ message: "Employee Not Found", status: false })
         }
         empoloyee.status = "Deactive"
         await empoloyee.save();
