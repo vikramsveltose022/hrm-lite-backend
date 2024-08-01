@@ -1,20 +1,29 @@
 import mongoose from "mongoose";
 
-const LeaveMangeSchema = new mongoose.Schema({
+const LeaveSchema = new mongoose.Schema({
     userId: {
+        type: String
+    },
+    Employee: {
         type: String
     },
     LeaveType: {
         type: String
     },
-    NoOfYearly: {
-        type: Number
+    StartDate: {
+        type: Date
     },
-    NoOfMonthly: {
-        type: Number
+    EndDate: {
+        type: Date
+    },
+    LeaveReason: {
+        type: String
     },
     CheckStatus: {
         type: String
+    },
+    TotalDays: {
+        type: Number
     },
     status: {
         type: String,
@@ -22,4 +31,4 @@ const LeaveMangeSchema = new mongoose.Schema({
     }
 }, { timestamps: true })
 
-export const LeaveManage = mongoose.model("leaveManage", LeaveMangeSchema)
+export const LeaveManage = mongoose.model("leaveManage", LeaveSchema)

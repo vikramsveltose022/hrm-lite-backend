@@ -1,8 +1,8 @@
-import { LeaveManage } from "../model/manageLeave.model.js";
+import { Leave } from "../model/leave.model.js";
 
 export const SaveLeave = async (req, res, next) => {
     try {
-        const leave = await LeaveManage.create(req.body)
+        const leave = await Leave.create(req.body)
         return leave ? res.status(200).json({ message: "Leave Saved Successfull!", status: true }) : res.status(400).json({ message: "something went wrong", status: false })
     } catch (err) {
         console.log(err);
@@ -11,7 +11,7 @@ export const SaveLeave = async (req, res, next) => {
 }
 export const ViewLeaveByUser = async (req, res, next) => {
     try {
-        const leave = await LeaveManage.find({ status: "Active", userId: req.params.id }).sort({ sortorder: -1 })
+        const leave = await Leave.find({ status: "Active", userId: req.params.id }).sort({ sortorder: -1 })
         return (leave.length > 0) ? res.status(200).json({ Leave: leave, status: true }) : res.status(404).json({ message: "Leave's Not Found", status: false })
 
     } catch (err) {
@@ -21,7 +21,7 @@ export const ViewLeaveByUser = async (req, res, next) => {
 }
 export const ViewLeave = async (req, res, next) => {
     try {
-        const leave = await LeaveManage.find({ status: "Active" }).sort({ sortorder: -1 })
+        const leave = await Leave.find({ status: "Active" }).sort({ sortorder: -1 })
         return (leave.length > 0) ? res.status(200).json({ Leave: leave, status: true }) : res.status(404).json({ message: "Leave's Not Found", status: false })
 
     } catch (err) {
@@ -31,7 +31,7 @@ export const ViewLeave = async (req, res, next) => {
 }
 export const ViewLeaveById = async (req, res, next) => {
     try {
-        const leave = await LeaveManage.findById(req.params.id)
+        const leave = await Leave.findById(req.params.id)
         return leave ? res.status(200).json({ Leave: leave, status: true }) : res.status(400).json({ message: "something went wrong", status: false })
     }
     catch (err) {
@@ -41,7 +41,7 @@ export const ViewLeaveById = async (req, res, next) => {
 }
 export const DeleteLeave = async (req, res, next) => {
     try {
-        const leave = await LeaveManage.findById(req.params.id)
+        const leave = await Leave.findById(req.params.id)
         if (!leave) {
             return res.status(404).json({ message: "Leave Not Found", status: false })
         }
@@ -56,12 +56,12 @@ export const DeleteLeave = async (req, res, next) => {
 }
 export const UpdatedLeave = async (req, res, next) => {
     try {
-        const leave = await LeaveManage.findById(req.params.id)
+        const leave = await Leave.findById(req.params.id)
         if (!leave) {
             return res.status(404).json({ message: "Leave Not Found", status: false })
         }
         const updatedData = req.body;
-        await LeaveManage.findByIdAndUpdate(req.params.id, updatedData, { new: true })
+        await Leave.findByIdAndUpdate(req.params.id, updatedData, { new: true })
         return res.status(200).json({ message: "updated successfull", status: true })
     }
     catch (err) {
