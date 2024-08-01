@@ -10,6 +10,16 @@ export const SaveHoliday = async (req, res, next) => {
         return res.status(500).json({ error: "Internal Server Error", status: false })
     }
 }
+export const SaveHolidaymultiple = async (req, res, next) => {
+    try {
+        const holiday = await Holiday.create(req.body.Holidays)
+        return holiday ? res.status(200).json({ message: "Holiday Saved Successfull!", status: true }) : res.status(400).json({ message: "something went wrong", status: false })
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(500).json({ error: "Internal Server Error", status: false })
+    }
+}
 export const ViewHoliday = async (req, res, next) => {
     try {
         const holiday = await Holiday.find({ status: "Active" }).sort({ sortorder: -1 })
