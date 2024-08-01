@@ -1,11 +1,11 @@
 import moment from "moment";
 import { Employee } from "../model/employee.model.js";
 import { Holiday } from "../model/holiday.model.js";
-import { Leave } from "../model/leave.model.js";
-import { LeaveManage } from "../model/manageLeave.model.js";
 import { Salary } from "../model/salary.model.js";
 import { Shift } from "../model/shift.model.js";
 import axios from "axios";
+import { LeaveManage } from "../model/manageLeave.model.js";
+import { Leave } from "../model/leave.model.js";
 
 export const CreateSalary = async (req, res, next) => {
     try {
@@ -55,7 +55,7 @@ export const CreateSalary = async (req, res, next) => {
                     overTimeAmount = ((id.Salary / (lastMonth.daysInPreviousMonth)) / hours) * totalOverTime;
                 }
             }
-            const leave = await Leave.find({
+            const leave = await LeaveManage.find({
                 Employee: id._id,
                 $or: [{ startDate: { $gte: previousMonthStart, $lte: previousMonthEnd } },
                 { endDate: { $gte: previousMonthStart, $lte: previousMonthEnd } }]
@@ -64,7 +64,7 @@ export const CreateSalary = async (req, res, next) => {
                 // console.log("leave not found")
             }
             for (let id of leave) {
-                const checkLeave = await LeaveManage.findById(id.LeaveType)
+                const checkLeave = await Leave.findById(id.LeaveType)
                 if (!checkLeave) {
                     // console.log("leave manage not found")
                 }
