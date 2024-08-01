@@ -43,6 +43,9 @@ const employeeSchema = new mongoose.Schema({
     Shift: {
         type: Object
     },
+    Salary: {
+        type: Number
+    },
     status: {
         type: String,
         default: "Active"

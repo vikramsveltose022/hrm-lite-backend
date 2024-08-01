@@ -14,7 +14,7 @@ export const DeleteShiftDetail = async (req, res, next) => {
     try {
         const check = await Shift.findByIdAndDelete(req.params.id)
         if (!check) {
-            return res.status(404).json({ message: "Shift Not Fount", status: false })
+            return res.status(404).json({ message: "Shift Not Found", status: false })
         }
         return res.status(200).json({ message: "delete successfull", status: true })
 

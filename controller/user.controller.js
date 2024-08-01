@@ -41,7 +41,7 @@ export const DeleteUserDetail = async (req, res, next) => {
     try {
         const user = await User.findById(req.params.id)
         if (!user) {
-            return res.status(404).json({ message: "Not Fount", status: false })
+            return res.status(404).json({ message: "Not Found", status: false })
         }
         user.status = "Deactive"
         await user.save();
