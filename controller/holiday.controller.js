@@ -12,8 +12,12 @@ export const SaveHoliday = async (req, res, next) => {
 }
 export const SaveHolidaymultiple = async (req, res, next) => {
     try {
-        const holiday = await Holiday.create(req.body.Holidays)
-        return holiday ? res.status(200).json({ message: "Holiday Saved Successfull!", status: true }) : res.status(400).json({ message: "something went wrong", status: false })
+        let Holiday = []
+        for (const item of req.body.Holidays) {
+            const holiday = await Holiday.create(item)
+            await Holiday.push(holiday)
+        }
+        return (Holiday.length > 0) ? res.status(200).json({ message: "Holiday Saved Successfull!", status: true }) : res.status(400).json({ message: "something went wrong", status: false })
     }
     catch (err) {
         console.log(err);
