@@ -10,7 +10,7 @@ export const SaveHoliday = async (req, res, next) => {
         return res.status(500).json({ error: "Internal Server Error", status: false })
     }
 }
-export const SaveHolidaymultiple = async (req, res, next) => {
+export const SaveHolidaymultiple1 = async (req, res, next) => {
     try {
         let Holidayss = [];
         const existingHoliday = []
@@ -30,6 +30,32 @@ export const SaveHolidaymultiple = async (req, res, next) => {
         return res.status(500).json({ error: "Internal Server Error", status: false })
     }
 }
+export const SaveHolidaymultiple = async (req, res, next) => {
+    try {
+        let savedHolidays = [];
+        let existingHolidays = [];
+        for (const item of req.body.Holidays) {
+            const existingHoliday = await Holiday.findOne({ userId: item.userId, Year: item.Year, Month: item.Month, Day: item.Day });
+            if (existingHoliday) {
+                existingHolidays.push(existingHoliday);
+                continue;
+            }
+            const holiday = new Holiday(item);
+            await holiday.save();
+            savedHolidays.push(holiday);
+        }
+        if (savedHolidays.length > 0) {
+            return res.status(200).json({ message: "Holidays saved successfully!", status: true, savedHolidays });
+        } else {
+            const message = existingHolidays.length > 0 ? "All holidays already exist." : "Something went wrong.";
+            return res.status(400).json({ message, status: false, existingHolidays });
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Internal Server Error", status: false });
+    }
+};
+
 export const ViewHoliday = async (req, res, next) => {
     try {
         const holiday = await Holiday.find({ status: "Active" }).sort({ sortorder: -1 })
