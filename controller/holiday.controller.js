@@ -55,7 +55,6 @@ export const SaveHolidaymultiple = async (req, res, next) => {
         return res.status(500).json({ error: "Internal Server Error", status: false });
     }
 };
-
 export const ViewHoliday = async (req, res, next) => {
     try {
         const holiday = await Holiday.find({ status: "Active" }).sort({ sortorder: -1 })
