@@ -3,6 +3,7 @@ import express from "express"
 import bodyParser from "body-parser"
 import path from "path"
 import cors from "cors";
+import cron from "node-cron"
 import { fileURLToPath } from "url"
 import { dbConfig } from "./db/dbConfig.js"
 import EmployeeRouter from "./routes/employee.route.js";
@@ -13,6 +14,7 @@ import LeaveRouter from "./routes/leave.route.js";
 import ManageLeaveRouter from "./routes/manageLeave.route.js";
 import HolidayRouter from "./routes/holiday.route.js";
 import SalaryRouter from "./routes/salary.route.js";
+import { AllSunday } from "./service/sunday.js";
 
 dotenv.config()
 const app = express()
@@ -37,6 +39,10 @@ app.get("/", (req, res) => {
     res.send("Hello World!")
 })
 
+// cron.schedule("37 12 * * *", () => {
+//     AllSunday()
+// })
+
 app.listen(process.env.PORT, () => {
-    console.log(`SERVER RUNNING ON ${process.env.PORT} PORT`)
+    console.log(`SERVER RUNNING ON ${process.env.PORT} PORT` || 5555)
 })
