@@ -14,6 +14,7 @@ import LeaveRouter from "./routes/leave.route.js";
 import ManageLeaveRouter from "./routes/manageLeave.route.js";
 import HolidayRouter from "./routes/holiday.route.js";
 import SalaryRouter from "./routes/salary.route.js";
+import ReceiptRouter from "./routes/receipt.route.js"
 import { AllSunday } from "./service/sunday.js";
 
 dotenv.config()
@@ -33,6 +34,7 @@ app.use("/leave-manage", LeaveRouter)
 app.use("/leave", ManageLeaveRouter)
 app.use("/holiday", HolidayRouter)
 app.use("/salary", SalaryRouter)
+app.use("/receipt", ReceiptRouter)
 
 
 app.get("/", (req, res) => {

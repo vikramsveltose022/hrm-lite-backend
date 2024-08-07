@@ -26,8 +26,9 @@ export const CreateSalary = async (req, res, next) => {
         let totalSundayHours;
         const current = new Date()
         const month = current.getMonth()
+        // const formattedMonth = (month < 10 ? "0" : "") + month;
         const year = current.getFullYear()
-        const holiday = await Holiday.find({ month: month.toString() })
+        const holiday = await Holiday.find({ userId: req.params.userId, Month: month })
         if (holiday.length > 0) {
             totalHoliday = holiday.length
         }
@@ -72,8 +73,8 @@ export const CreateSalary = async (req, res, next) => {
             }
             // const lastMonth = await SundayCheck()
             // console.log("lastMonth : " + lastMonth.daysInPreviousMonth)
-            totalSundayHours = (lastMonth.sundays) * hours
-            const finalHours = (totalHours + ((LeaveCount + totalHoliday) * hours)) + totalSundayHours
+            // totalSundayHours = (lastMonth.sundays) * hours
+            const finalHours = (totalHours + ((LeaveCount + totalHoliday) * hours)) //+totalSundayHours
             salary = (((id.Salary / (lastMonth.daysInPreviousMonth)) / hours) * finalHours)
             const CheckSalary = (totalHours === 0) ? salary = 0 : salary;
             let latestSalary = {
@@ -86,12 +87,12 @@ export const CreateSalary = async (req, res, next) => {
                 totalSalary: CheckSalary,
                 totalHours: totalHours,
                 DayHours: hours,
-                totalSundayHours: totalSundayHours,
+                // totalSundayHours: totalSundayHours,
                 totalWorkingDays: totalWorkingDays,
                 overTimeAmount: overTimeAmount,
                 employee: employee
             }
-            await Salary.create(latestSalary)
+            // await Salary.create(latestSalary)
             latest.push(latestSalary)
             employee = []
             totalHours = 0
