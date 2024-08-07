@@ -42,7 +42,7 @@ export const UpdateReceipt = async (req, res, next) => {
 }
 export const ViewReceipt = async (req, res, next) => {
     try {
-        const receipts = await Receipt.find({ database: req.params.database, status: "Active",type:"receipt" }).sort({ sortorder: -1 }).populate({ path: "employeeId", model: "employee" }).populate({ path: "userId", model: "user" })
+        const receipts = await Receipt.find({ userId: req.params.id, status: "Active", type: "receipt" }).sort({ sortorder: -1 }).populate({ path: "employeeId", model: "employee" }).populate({ path: "userId", model: "user" })
         return (receipts.length > 0) ? res.status(200).json({ Receipts: receipts, status: true }) : res.status(404).json({ message: "Not Found", status: false });
     } catch (err) {
         console.error(err);
@@ -98,6 +98,15 @@ export const SavePayment = async (req, res, next) => {
         return res.status(500).json({ error: "Internal Server Error", status: false });
     }
 }
+export const ViewPayment = async (req, res, next) => {
+    try {
+        const receipts = await Receipt.find({ userId: req.params.id, status: "Active", type: "payment" }).sort({ sortorder: -1 }).populate({ path: "employeeId", model: "employee" }).populate({ path: "userId", model: "user" })
+        return (receipts.length > 0) ? res.status(200).json({ Receipts: receipts, status: true }) : res.status(404).json({ message: "Not Found", status: false });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Internal Server Error", status: false });
+    }
+};
 export const UpdatePayment = async (req, res, next) => {
     try {
         const existingReceipt = await Receipt.findById(req.params.id);
